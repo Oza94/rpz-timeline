@@ -21,6 +21,7 @@ export interface CharacterRecord {
   streamer: string;
   background: string;
   image: string;
+  vodUrls: string[];
 }
 
 export interface EventRecord {
@@ -66,6 +67,10 @@ export function processCharactersSheet(input: Record<string, string>[]) {
       streamer: row.streamer,
       background: row.background,
       image: row.image,
+      vodUrls: row.vods
+        ?.split("\n")
+        .map((url) => url.trim())
+        .filter((url) => url.includes("twitch.tv")),
     })) as CharacterRecord[];
 }
 

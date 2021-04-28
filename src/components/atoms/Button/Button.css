@@ -1,0 +1,8 @@
+.Button {
+  background: var(--link-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border: none;
+}

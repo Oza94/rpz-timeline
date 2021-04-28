@@ -1,6 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "react-router";
+import Button from "../../atoms/Button/Button";
 import Card from "../../atoms/Card/Card";
+import EmbedVOD from "../../atoms/EmbedVod/EmbedVod";
 import { useTimeline } from "../../context/TimelineContext/TimelineContext";
 import "./CharacterPage.css";
 
@@ -11,6 +13,7 @@ function CharacterPage() {
     () => characters?.find((character) => character.id === id),
     [id, characters]
   );
+  const [showVods, setShowVods] = useState(false);
 
   if (!character) {
     return <div>...</div>;
@@ -36,6 +39,27 @@ function CharacterPage() {
         </div>
         <h3 className="CharacterPage__title">Lore</h3>
         <p>{character.background}</p>
+        {(character.vodUrls?.length || 0) > 0 && (
+          <>
+            {" "}
+            <h3 className="CharacterPage__title">Rediffusions (VoDs)</h3>
+            {showVods ? (
+              <div className="CharacterPage__vodGrid">
+                {character.vodUrls.map((vodUrl) => (
+                  <div className="CharacterPage__vod">
+                    <EmbedVOD url={vodUrl} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="CharacterPage__showVods">
+                <Button onClick={() => setShowVods(true)}>
+                  Montrer les VoDs
+                </Button>
+              </div>
+            )}
+          </>
+        )}
       </Card>
     </div>
   );
