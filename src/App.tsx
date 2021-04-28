@@ -34,12 +34,15 @@ function App() {
           <Link to={PATH_TIMELINE}>RPZ Timeline</Link>
         </h1>
         <p>
-          Modeste site pour répertorier les évennements du RPZ. Ce site n'est
-          pas produit ou maintenu par la communauté de streameurs.
+          Modeste site pour répertorier les évenements du{" "}
+          <a href="https://zevent.fr/rpz/">RPZ</a>, le serveur GTA RP du Zevent.
+          Ce site n'est pas produit ou maintenu par la communauté de streameurs.
           <br />
           <a href="https://docs.google.com/spreadsheets/d/1HnrJnn4gbnbbsk7Zv4PEdT7R_HH57NfULhN8KxM49MU/edit?usp=sharing">
             Contribuer aux données
           </a>
+          <span> - </span>
+          <a href="https://github.com/Oza94/rpz-timeline">Contribuer au code</a>
         </p>
       </div>
       <Switch>
