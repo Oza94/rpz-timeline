@@ -17,7 +17,7 @@ function formatDate(date: Date) {
   const time = date.getMinutes()
     ? `${pad(date.getHours())}h${pad(date.getMinutes())}`
     : `${date.getHours()}h`;
-  const days = `${pad(date.getDay())}/${pad(date.getMonth() + 1)}`;
+  const days = `${pad(date.getDate())}/${pad(date.getMonth() + 1)}`;
 
   return `Le ${days} à ${time}`;
 }

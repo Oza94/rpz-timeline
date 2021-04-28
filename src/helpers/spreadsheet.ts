@@ -66,15 +66,17 @@ export function processEventsSheet(
   input: Record<string, string>[],
   characters: CharacterRecord[]
 ) {
-  return input.map((row) => ({
-    date: new Date(Date.parse(row.date)),
-    characters: row.personnages_ids
-      .split("\n")
-      .map((id) => characters.find((c) => c.id === id.trim()))
-      .filter((c) => !!c),
-    title: row.titre,
-    description: row.description,
-  })) as EventRecord[];
+  return input
+    .map((row) => ({
+      date: new Date(Date.parse(row.date)),
+      characters: row.personnages_ids
+        .split("\n")
+        .map((id) => characters.find((c) => c.id === id.trim()))
+        .filter((c) => !!c),
+      title: row.titre,
+      description: row.description,
+    }))
+    .sort((a, b) => b.date.getTime() - a.date.getTime()) as EventRecord[];
 }
 
 export async function fetchData() {
