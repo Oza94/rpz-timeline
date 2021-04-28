@@ -34,7 +34,7 @@ export interface EventRecord {
   vodTimecodeUrl: string;
 }
 
-async function parseMarkdown(md: string) {
+async function parseMarkdown(md: string): Promise<string> {
   return new Promise((resolve) =>
     remark()
       .use(html)
