@@ -1,8 +1,5 @@
 import React from "react";
-import { generatePath } from "react-router";
-import { Link } from "react-router-dom";
 import { EventRecord } from "../../../helpers/spreadsheet";
-import { PATH_CHARACTER } from "../../../settings";
 import EventCard from "../EventCard/EventCard";
 import "./TimelineEvent.css";
 

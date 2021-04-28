@@ -1,23 +1,9 @@
-import React, { useEffect, useState } from "react";
-import {
-  CharacterRecord,
-  EventRecord,
-  fetchData,
-} from "../../../helpers/spreadsheet";
+import React from "react";
+import { useTimeline } from "../../context/TimelineContext/TimelineContext";
 import TimelineEvent from "../../molecules/TimelineEvent/TimelineEvent";
 
 function TimelinePage() {
-  const [characters, setCharacters] = useState<CharacterRecord[]>();
-  const [events, setEvents] = useState<EventRecord[]>();
-
-  useEffect(() => {
-    async function doFetch() {
-      const result = await fetchData();
-      setCharacters(result.characters);
-      setEvents(result.events);
-    }
-    doFetch();
-  }, []);
+  const { events } = useTimeline();
 
   return (
     <div className="TimelinePage">

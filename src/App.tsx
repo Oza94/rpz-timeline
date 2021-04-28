@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { CharacterRecord, EventRecord, fetchData } from "./helpers/spreadsheet";
-import TimelineEvent from "./components/molecules/TimelineEvent/TimelineEvent";
+import { fetchData } from "./helpers/spreadsheet";
 import { useTimeline } from "./components/context/TimelineContext/TimelineContext";
 import { Route, Switch } from "react-router";
-import { PATH_CHARACTER, PATH_TIMELINE } from "./settings";
+import { PATH_TIMELINE } from "./settings";
 import TimelinePage from "./components/pages/TimelinePage/TimelinePage";
 import { Link } from "react-router-dom";
 
@@ -18,7 +17,7 @@ function App() {
       setEvents(result.events);
     }
     doFetch();
-  }, []);
+  }, [setCharacters, setEvents]);
 
   if (!events || !characters) {
     return (
