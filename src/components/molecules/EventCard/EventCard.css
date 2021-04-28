@@ -12,6 +12,7 @@
   margin-bottom: 0;
 }
 
-.EventCard__date {
+.EventCard__meta {
   color: #454545;
+  font-size: 0.825rem;
 }

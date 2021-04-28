@@ -14,6 +14,7 @@ interface Props {
 function pad(n: number) {
   return n < 10 ? `0${n}` : n;
 }
+
 function formatDate(date: Date) {
   const time = date.getMinutes()
     ? `${pad(date.getHours())}h${pad(date.getMinutes())}`
@@ -23,12 +24,24 @@ function formatDate(date: Date) {
   return `Le ${days} à ${time}`;
 }
 
+function getTimecodeFromUrl(url: string) {
+  return url.split("?t=")[1];
+}
+
 function EventCard({ event, className = "" }: Props) {
   return (
     <Card className={className}>
       <h2 className="EventCard__title">{event.title}</h2>
-      {event.date && (
-        <div className="EventCard__date">{formatDate(event.date)}</div>
+      {(event.date || event.vodTimecodeUrl) && (
+        <div className="EventCard__meta">
+          {event.date && formatDate(event.date)}
+          {event.date && event.vodTimecodeUrl && <span> - </span>}
+          {event.vodTimecodeUrl && (
+            <a href={event.vodTimecodeUrl}>
+              VOD (Timecode {getTimecodeFromUrl(event.vodTimecodeUrl)})
+            </a>
+          )}
+        </div>
       )}
       <p>{event.description}</p>
       <p>

@@ -28,6 +28,7 @@ export interface EventRecord {
   characters: CharacterRecord[];
   title: string;
   description: string;
+  vodTimecodeUrl: string;
 }
 
 export async function getSheet(url: string) {
@@ -82,6 +83,7 @@ export function processEventsSheet(
         .filter((c) => !!c),
       title: row.titre,
       description: row.description,
+      vodTimecodeUrl: row.vod_timecode,
     }))
     .sort((a, b) => b.date.getTime() - a.date.getTime()) as EventRecord[];
 }
