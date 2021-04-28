@@ -43,7 +43,7 @@ function EventCard({ event, className = "" }: Props) {
           )}
         </div>
       )}
-      <p>{event.description}</p>
+      <div dangerouslySetInnerHTML={{ __html: event.description }} />
       <p>
         {event.characters.map((character, i) => (
           <>

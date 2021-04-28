@@ -1,4 +1,6 @@
 import { set } from "object-path";
+import remark from "remark";
+import html from "remark-html";
 import { SHEET_CHARACTERS, SHEET_EVENTS, SPREADSHEET_URL } from "../settings";
 
 export interface SpreadsheetEntry {
@@ -32,6 +34,20 @@ export interface EventRecord {
   vodTimecodeUrl: string;
 }
 
+async function parseMarkdown(md: string) {
+  return new Promise((resolve) =>
+    remark()
+      .use(html)
+      .process(md, function (err, file) {
+        if (err) {
+          console.error(err);
+          return resolve("");
+        }
+        resolve(String(file));
+      })
+  );
+}
+
 export async function getSheet(url: string) {
   const res = await fetch(url);
   const json = (await res.json()) as SpreadsheetFeed;
@@ -58,39 +74,46 @@ export async function getSheet(url: string) {
   return data;
 }
 
-export function processCharactersSheet(input: Record<string, string>[]) {
-  return input
-    .filter((row) => !!row.personnage_id)
-    .map((row) => ({
-      id: row.personnage_id,
-      name: row.personnage,
-      streamer: row.streamer,
-      background: row.background,
-      image: row.image,
-      vodUrls: row.vods
-        ?.split("\n")
-        .map((url) => url.trim())
-        .filter((url) => url.includes("twitch.tv")),
-    })) as CharacterRecord[];
+export async function processCharactersSheet(input: Record<string, string>[]) {
+  return (await Promise.all(
+    input
+      .filter((row) => !!row.personnage_id)
+      .map(async (row) => ({
+        id: row.personnage_id,
+        name: row.personnage,
+        streamer: row.streamer,
+        background: await parseMarkdown(row.background),
+        image: row.image,
+        vodUrls: row.vods
+          ?.split("\n")
+          .map((url) => url.trim())
+          .filter((url) => url.includes("twitch.tv")),
+      }))
+  )) as CharacterRecord[];
 }
 
-export function processEventsSheet(
+export async function processEventsSheet(
   input: Record<string, string>[],
   characters: CharacterRecord[]
 ) {
-  return input
-    .filter((row) => !!row.id)
-    .map((row) => ({
-      date: new Date(Date.parse(row.date)),
-      characters: row.personnages_ids
-        .split("\n")
-        .map((id) => characters.find((c) => c.id === id.trim()))
-        .filter((c) => !!c),
-      title: row.titre,
-      description: row.description,
-      vodTimecodeUrl: row.vod_timecode,
-    }))
-    .sort((a, b) => b.date.getTime() - a.date.getTime()) as EventRecord[];
+  const records = await Promise.all(
+    input
+      .filter((row) => !!row.id)
+      .map(async (row) => ({
+        date: new Date(Date.parse(row.date)),
+        characters: row.personnages_ids
+          .split("\n")
+          .map((id) => characters.find((c) => c.id === id.trim()))
+          .filter((c) => !!c),
+        title: row.titre,
+        description: await parseMarkdown(row.description),
+        vodTimecodeUrl: row.vod_timecode,
+      }))
+  );
+
+  records.sort((a, b) => b.date.getTime() - a.date.getTime()) as EventRecord[];
+
+  return records;
 }
 
 export async function fetchData() {
@@ -98,8 +121,8 @@ export async function fetchData() {
     getSheet(SPREADSHEET_URL.replace("{sheet}", SHEET_EVENTS)),
     getSheet(SPREADSHEET_URL.replace("{sheet}", SHEET_CHARACTERS)),
   ]);
-  const characters = processCharactersSheet(rawCharacters);
-  const events = processEventsSheet(rawEvents, characters);
+  const characters = await processCharactersSheet(rawCharacters);
+  const events = await processEventsSheet(rawEvents, characters);
 
   console.log(rawEvents, rawCharacters, characters, events);
 

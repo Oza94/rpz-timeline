@@ -55,3 +55,11 @@
     min-height: 200px;
   }
 }
+
+.CharacterPage__content img {
+  max-width: 400px;
+  max-height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

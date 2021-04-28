@@ -38,7 +38,10 @@ function CharacterPage() {
           </div>
         </div>
         <h3 className="CharacterPage__title">Lore</h3>
-        <p>{character.background}</p>
+        <div
+          className="CharacterPage__content"
+          dangerouslySetInnerHTML={{ __html: character.background }}
+        />
         {(character.vodUrls?.length || 0) > 0 && (
           <>
             {" "}
