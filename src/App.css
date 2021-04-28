@@ -1,12 +1,10 @@
 .App {
-  max-width: 900px;
-  padding: 2rem 1rem;
-  margin: 0 auto;
 }
 
 .App__header {
   text-align: center;
   margin-bottom: 4rem;
+  background: linear-gradient(white, white 90%, transparent);
 }
 
 .App__headerTitle {
@@ -15,5 +13,17 @@
 
 .App__headerTitle a {
   text-decoration: none;
-  color: #333333;
+  color: var(--link-color);
+  font-family: "Permanent Marker", cursive;
+}
+
+.App__main,
+.App__headerInner {
+  max-width: 900px;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+}
+
+.App__headerInner {
+  padding-top: 1rem;
 }

@@ -1,0 +1,33 @@
+.CharacterPage__header {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.CharacterPage__imageFrame {
+  margin-right: 2rem;
+}
+
+.CharacterPage__image {
+  max-width: 128px;
+  max-height: 128px;
+}
+
+.CharacterPage__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.CharacterPage__name {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.CharacterPage__streamer {
+  margin-top: 0;
+  color: #454545;
+}
+
+.CharacterPage__title {
+  font-weight: normal;
+}

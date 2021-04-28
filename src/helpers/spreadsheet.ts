@@ -19,6 +19,8 @@ export interface CharacterRecord {
   id: string;
   name: string;
   streamer: string;
+  background: string;
+  image: string;
 }
 
 export interface EventRecord {
@@ -59,6 +61,8 @@ export function processCharactersSheet(input: Record<string, string>[]) {
     id: row.personnage_id,
     name: row.personnage,
     streamer: row.streamer,
+    background: row.background,
+    image: row.image,
   })) as CharacterRecord[];
 }
 

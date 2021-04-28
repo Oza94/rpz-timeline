@@ -3,6 +3,7 @@ import { generatePath } from "react-router";
 import { Link } from "react-router-dom";
 import { EventRecord } from "../../../helpers/spreadsheet";
 import { PATH_CHARACTER } from "../../../settings";
+import Card from "../../atoms/Card/Card";
 import "./EventCard.css";
 
 interface Props {
@@ -24,7 +25,7 @@ function formatDate(date: Date) {
 
 function EventCard({ event, className = "" }: Props) {
   return (
-    <div className={["EventCard", className].join(" ").trim()}>
+    <Card className={className}>
       <h2 className="EventCard__title">{event.title}</h2>
       {event.date && (
         <div className="EventCard__date">{formatDate(event.date)}</div>
@@ -40,7 +41,7 @@ function EventCard({ event, className = "" }: Props) {
           </>
         ))}
       </p>
-    </div>
+    </Card>
   );
 }
 

@@ -4,6 +4,9 @@
   --color-background: #efefef;
   --color-background-fixtures: #cccccc;
   --timeline-color: #4aba31e3;
+  --link-color: #255d18;
+  --text-color: #333333;
+  --text-light-color: #333333;
 }
 
 body {
@@ -40,6 +43,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
 }
 
 code {
