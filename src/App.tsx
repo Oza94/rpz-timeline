@@ -1,24 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { CharacterRecord, EventRecord, fetchData } from "./helpers/spreadsheet";
+import TimelineEvent from "./components/molecules/TimelineEvent/TimelineEvent";
+import { useTimeline } from "./components/context/TimelineContext/TimelineContext";
+import { Route, Switch } from "react-router";
+import { PATH_CHARACTER, PATH_TIMELINE } from "./settings";
+import TimelinePage from "./components/pages/TimelinePage/TimelinePage";
+import { Link } from "react-router-dom";
 
 function App() {
+  const { characters, setCharacters, events, setEvents } = useTimeline();
+
+  useEffect(() => {
+    async function doFetch() {
+      const result = await fetchData();
+      setCharacters(result.characters);
+      setEvents(result.events);
+    }
+    doFetch();
+  }, []);
+
+  if (!events || !characters) {
+    return (
+      <div className="App">
+        <div className="App__loading">...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <div className="App__header">
+        <h1 className="App__headerTitle">
+          <Link to={PATH_TIMELINE}>RPZ Timeline</Link>
+        </h1>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Modeste site pour répertorier les évennements du RPZ. Ce site n'est
+          pas produit ou maintenu par la communauté de streameurs.
+          <br />
+          <a href="https://docs.google.com/spreadsheets/d/1HnrJnn4gbnbbsk7Zv4PEdT7R_HH57NfULhN8KxM49MU/edit?usp=sharing">
+            Contribuer aux données
+          </a>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+      <Switch>
+        <Route path={PATH_TIMELINE} exact component={TimelinePage} />
+        <Route
+          render={() => (
+            <div>
+              <h1 className="App__headerTitle">Non trouvée :(</h1>
+            </div>
+          )}
+        />
+      </Switch>
     </div>
   );
 }
