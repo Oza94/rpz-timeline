@@ -41,7 +41,7 @@ function App() {
             Zevent. Ce site n'est pas produit ou maintenu par la communauté de
             streameurs.
             <br />
-            <a href="https://docs.google.com/spreadsheets/d/1HnrJnn4gbnbbsk7Zv4PEdT7R_HH57NfULhN8KxM49MU/edit?usp=sharing">
+            <a href="https://docs.google.com/spreadsheets/d/1HnrJnn4gbnbbsk7Zv4PEdT7R_HH57NfULhN8KxM49MU/edit#gid=72183720">
               Contribuer aux données
             </a>
             <span> - </span>

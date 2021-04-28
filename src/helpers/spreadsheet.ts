@@ -57,13 +57,15 @@ export async function getSheet(url: string) {
 }
 
 export function processCharactersSheet(input: Record<string, string>[]) {
-  return input.map((row) => ({
-    id: row.personnage_id,
-    name: row.personnage,
-    streamer: row.streamer,
-    background: row.background,
-    image: row.image,
-  })) as CharacterRecord[];
+  return input
+    .filter((row) => !!row.personnage_id)
+    .map((row) => ({
+      id: row.personnage_id,
+      name: row.personnage,
+      streamer: row.streamer,
+      background: row.background,
+      image: row.image,
+    })) as CharacterRecord[];
 }
 
 export function processEventsSheet(
@@ -71,6 +73,7 @@ export function processEventsSheet(
   characters: CharacterRecord[]
 ) {
   return input
+    .filter((row) => !!row.id)
     .map((row) => ({
       date: new Date(Date.parse(row.date)),
       characters: row.personnages_ids
